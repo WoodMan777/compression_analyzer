@@ -1,16 +1,21 @@
 # ______________________________________________________
-#                                                       |
-# exmaple for 7z LZMA2                                  |
-# a: True means just "a" with no extra parameters           |
-# "x,y,z" will go through all values for this parameter |
-# -mmt: "1,2,3" means -mmt1, -mmt2, -mmt3 etc.           |
+#                                                       
+# exmaple for 7z LZMA2                                  
+# a: True means just "a" with no extra parameters           
+# "x,y,z" will go through all values for this parameter 
+# -mmt: "1,2,3" means -mmt1, -mmt2, -mmt3 etc.           
 # ______________________________________________________
+
+setup:
+  exepath: "C:\\Users\\WDMFR\\Desktop\\Compression\\7z2301-x64.exe"
+  folder_in: "C:\\Users\\WDMFR\\Desktop\\Compression\\data_to_compress\\"
+  folder_out: "C:\\Users\\WDMFR\\Desktop\\Compression\\compressed\\"
 
 test1:
   a: True
-  -mmt: "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16"
   -mx: "9"
-  -md: "=64,=128,=256"
+  -md: "64m,128m,256m"
+  -mmt: "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16"
 
 # i.e.
 # a -mmt1 -mx9 -md=64
@@ -19,5 +24,4 @@ test2:
   a: True
   -mmt: "1-6"
   -mx: "9"
-  -md: "=256"
-  
+  -md: "=256m"  

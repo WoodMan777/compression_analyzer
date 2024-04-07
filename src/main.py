@@ -1,11 +1,13 @@
 import tools, os, hashlib, sqlite3
-import time
+import time, yaml
 
 
-folderpath = "C:\\Users\\WDMFR\\Desktop\\Лабы\\4H1\\Compression\\data_to_compress\\"
-outpath = "C:\\Users\\WDMFR\\Desktop\\Лабы\\4H1\\Compression\\compressed\\"
+config = yaml.safe_load(open("config.yaml", 'r'))
+folderpath = config['setup']['folder_in']
+outpath = config['setup']['folder_out']
+exepath = config['setup']['exepath']
 files = os.listdir(folderpath)
-exepath = "C:\\Users\\WDMFR\\Desktop\\Лабы\\4H1\\Compression\\7z2301-x64.exe"
+
 
 print(f"Chosen path: {folderpath}")
 print(f"Found {len(files)} files\n")
@@ -56,11 +58,14 @@ for file in files:
         metricdb.commit()
         print(f"Calculated randomness for {file}.")
 
-allcmds = tools.generateAllCmdStrings()
+allcmds = tools.generateAllCmdStrings(exepath, config)
 
 for command in allcmds:
+    print(f"> Performing test {allcmds.index(command)+1} of {len(allcmds)}")
     for file in files:
+        print(f">>file {files.index(file)+1} of {len(files)}")
         cmd = f"{command} {outpath}{file}.7z {folderpath}{file}"
+        print(cmd)
         start = time.time()
         os.system(cmd)
         end = time.time()

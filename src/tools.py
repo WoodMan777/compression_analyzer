@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from time import time
 import bitstring as bs
-import yaml
+import yaml, hashlib
 
 def getFastMarkovMatrix(binfile):
     count = np.zeros((2**8, 2**8), dtype = "float64")
@@ -46,9 +46,15 @@ def cartesianMultiplication(a,b):
             res.append(i+' '+j)
     return res
 
+def calculateHash(filepath):
+    filebin = open(filepath, "rb", buffering = 0)
+    return hashlib.file_digest(filebin, 'sha512').hexdigest()
+
 def generateAllCmdStrings(exepath, ymlfile):
     res = []
     for test in ymlfile.keys():
+        if test == "setup":
+            continue
         params = {}
         for param in ymlfile[test].keys():
             if 'bool' in str(type(ymlfile[test][param])):
